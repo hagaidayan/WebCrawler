@@ -1,0 +1,26 @@
+Web Crawler - A multithreaded web program demonstrates BFS Graph Theory algorithm in order to recursively search HTTP links,
+ connect to their web server, and download it's content. 
+
+Files:
+
+Wget:
+Consisting the main method of the program, and implementing the 2 solutions of the Web Crawler for a given input URL - 
+1. doMultiThreaded method initiates and starts a new Thread for each URL enqueued in the BFS queue for further iterations of the algorithm.
+2. doThreadedPool holds a "thread pool" in an array, and result in space efficiency due to the fact that only constant number of threads are initiated,
+and also process time efficiency thanks to the BlockingQueue that makes the threads sleep (not busy waiting) 
+while the try to dequeue another URL when the queue is empty.
+The main thread will be looping through the state of the threads, and interrupt them if they are all asleep in order to terminate the program.
+
+MYURL & MYURL_Patterns:
+classes of objects that get a URL as a string, parses it, allowes geting it's components (host, protocol, port,,,)
+
+BlockingListQueue:
+A class of an object wrapping java queue, and monitoring dequeueing it when it's empty using a Semaphore.
+
+URLprocessing:
+A class that uses static methods in order to analyze and process HTML source code lines, and for every URL it finds it calls Wget method of handling URL
+then it will be enqueued in the BlockingQueue, as a natural part of the BFS algorithm.
+
+Xurl:
+A class that by receiving A URL creates a socket and sends a simple GET request to the web server behind it,
+It processes the response's signature (HTML header), ensures it's validity, and sends the answer printer of the socket to URLProcessing.
