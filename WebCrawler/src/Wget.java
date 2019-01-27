@@ -84,7 +84,9 @@ public class Wget {
             // this method is called for each matched url
             public void takeUrl(String url) {
                 if(!seen.contains(url)){
+                    lock.lock();
                     seen.add(url);
+                    lock.unlock();
                     queue.enqueue(url);
                 }
             }
